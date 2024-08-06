@@ -26,10 +26,10 @@ public class UserController {
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto) throws InvalidRequestException
     {
-        if(userRequestDto.getName()==null||userRequestDto.getEmail()==null)
+        if(userRequestDto.getName()==null||userRequestDto.getEmail()==null||userRequestDto.getPassword()==null)
             throw new InvalidRequestException("required information is missing");
 
-        User user=userService.createUser(userRequestDto.getName(),userRequestDto.getEmail());
+        User user=userService.createUser(userRequestDto.getName(),userRequestDto.getEmail(),userRequestDto.getPassword());
 
         return new ResponseEntity<>(UserResponseDto.from(user), HttpStatus.OK);
     }
