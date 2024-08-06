@@ -1,6 +1,7 @@
 package com.projects.authdemo.Config;
 
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,5 +14,8 @@ public class UserConfig {
     {
        return new BCryptPasswordEncoder();
     }
+
+
+
 
 }

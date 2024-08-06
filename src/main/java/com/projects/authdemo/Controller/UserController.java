@@ -3,7 +3,9 @@ package com.projects.authdemo.Controller;
 import com.projects.authdemo.DTO.UserRequestDto;
 import com.projects.authdemo.DTO.UserResponseDto;
 import com.projects.authdemo.Exception.InvalidRequestException;
+import com.projects.authdemo.Model.Session;
 import com.projects.authdemo.Model.User;
+import com.projects.authdemo.Service.SessionService;
 import com.projects.authdemo.Service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -18,10 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @NoArgsConstructor
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
+
+
 
     @PostMapping("/signup")
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto) throws InvalidRequestException
@@ -29,8 +33,9 @@ public class UserController {
         if(userRequestDto.getName()==null||userRequestDto.getEmail()==null||userRequestDto.getPassword()==null)
             throw new InvalidRequestException("required information is missing");
 
-        User user=userService.createUser(userRequestDto.getName(),userRequestDto.getEmail(),userRequestDto.getPassword());
+        UserResponseDto userResponseDto=userService.createUser(userRequestDto.getName(),userRequestDto.getEmail(),userRequestDto.getPassword());
 
-        return new ResponseEntity<>(UserResponseDto.from(user), HttpStatus.OK);
+
+        return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 }

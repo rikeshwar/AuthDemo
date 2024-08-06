@@ -2,6 +2,8 @@ package com.projects.authdemo.Service;
 
 
 import com.projects.authdemo.Config.UserConfig;
+import com.projects.authdemo.DTO.UserResponseDto;
+import com.projects.authdemo.Model.Session;
 import com.projects.authdemo.Model.User;
 import com.projects.authdemo.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,19 @@ public class UserService {
 
     @Autowired
     private UserConfig userConfig;
+    @Autowired
+    SessionService sessionService;
 
 
-    public User createUser(String name,String email,String password)
+    public UserResponseDto createUser(String name, String email, String password)
     {
         String enCryptedPassword=userConfig.getPasswordEncoder().encode(password);
 
 
-        return userRepository.save(new User(name,email,enCryptedPassword));
+        User user= userRepository.save(new User(name,email,enCryptedPassword));
+        Session session=sessionService.createSession(user);
+        UserResponseDto userResponseDto=UserResponseDto.from(user,session);
+        return userResponseDto;
 
 
     }
