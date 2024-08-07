@@ -19,7 +19,11 @@ public class SessionService {
     {
         Session session=new Session();
         session.setUser(user);
-        session.setToken(RandomStringUtils.random(20));
+        session.setToken(RandomStringUtils.randomAscii(20));//here
+        //if we use normal random may contain non Ascii value will craete
+        //problem in passing the data over http header which at its local
+        //level also try to encrypt and its work only with Ascii value
+        //so its get removed from http header if non Ascii value exist
         session.setStatus(Status.ACTIVE);
         return sessionRepository.save(session);
 
