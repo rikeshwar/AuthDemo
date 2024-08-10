@@ -4,6 +4,7 @@ import com.projects.authdemo.DTO.UserRequestDto;
 import com.projects.authdemo.DTO.UserResponseDto;
 import com.projects.authdemo.DTO.UserServiceResponseDto;
 import com.projects.authdemo.Exception.InvalidRequestException;
+import com.projects.authdemo.Exception.UserNotFoundException;
 import com.projects.authdemo.Model.Session;
 import com.projects.authdemo.Model.User;
 import com.projects.authdemo.Service.SessionService;
@@ -14,10 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +27,23 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    public List<User> getAllUsers()
+    {
+        return userService.getAllUsers();
+    }
+
+
+
+    @PostMapping("/role")
+    public ResponseEntity<UserResponseDto> assignRole(@RequestParam(name ="role") String role_name,
+                                      @RequestParam(name = "user_id") String id) throws UserNotFoundException
+    {
+        User user=userService.assignRole(Long.valueOf(id),role_name);
+
+        return new ResponseEntity<>(UserResponseDto.from(user),HttpStatus.OK);
+
+    }
 
 
     @PostMapping("/signup")

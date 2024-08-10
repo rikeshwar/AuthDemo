@@ -25,6 +25,7 @@ public class User extends BaseModel{
     //so java was trying to say @ManyToMany attribute should be of container type
 
     @OneToMany(mappedBy="user",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Session> sessions;
 
     public User(String name, String email,String password) {

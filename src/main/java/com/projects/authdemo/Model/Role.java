@@ -19,6 +19,10 @@ public class Role extends BaseModel {
     private String name;
     @ManyToMany(fetch = FetchType.LAZY)
     List<User> users;
+    public Role(String name)
+    {
+        this.name=name;
+    }
 
 
 }
