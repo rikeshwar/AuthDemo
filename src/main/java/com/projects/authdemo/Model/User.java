@@ -8,13 +8,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
 @Getter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Table(name="user")
 public class User extends BaseModel{
     private String name;
@@ -24,13 +24,19 @@ public class User extends BaseModel{
     private List<Role> role;//one user could be many role so role should be collect
     //so java was trying to say @ManyToMany attribute should be of container type
 
-    @OneToMany(mappedBy="user",fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<Session> sessions;
+//    @OneToMany(mappedBy="user",fetch = FetchType.LAZY)
+//    @JsonIgnore
+//    private List<Session> sessions;
+
+    public User()
+    {
+        this.role=new ArrayList<>();
+    }
 
     public User(String name, String email,String password) {
         this.name = name;
         this.email = email;
         this.password=password;
+        this.role=new ArrayList<>();
     }
 }

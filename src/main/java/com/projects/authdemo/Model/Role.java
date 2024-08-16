@@ -18,7 +18,9 @@ import java.util.List;
 public class Role extends BaseModel {
     private String name;
     @ManyToMany(fetch = FetchType.LAZY)
-    List<User> users;
+    List<User> users;//usually we need not to keep the collection at the both the\
+    //place role and the user we can keep it any one place
+    //and we
     public Role(String name)
     {
         this.name=name;

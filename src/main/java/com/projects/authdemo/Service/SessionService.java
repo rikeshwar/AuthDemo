@@ -9,6 +9,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SessionService {
     @Autowired
@@ -27,6 +29,10 @@ public class SessionService {
         session.setStatus(Status.ACTIVE);
         return sessionRepository.save(session);
 
+    }
+    public List<Session> getSessionByUserId(Long id)
+    {
+        return sessionRepository.getSessionsByUserId(id);
     }
 
 }
