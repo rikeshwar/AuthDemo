@@ -66,13 +66,13 @@ public class UserController {
         );
         return response;
     }
-    @PostMapping("/login")
-    public ResponseEntity<String> logInAndGetToken(@RequestParam("user_id") String email,
-                                                                        @RequestParam("password") String password) throws InvalidCredentialException
-    {
-        UserLogInResponseDto userLogInResponseDto =userService.logInAndGetToken(email,password);
-
-
-        return new ResponseEntity<>(userLogInResponseDto.getName(), userLogInResponseDto.getMultiValueMap(),HttpStatus.OK);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<String> logInAndGetToken(@RequestParam("user_id") String email,
+//                                                                        @RequestParam("password") String password) throws InvalidCredentialException
+//    {
+//        UserLogInResponseDto userLogInResponseDto =userService.logInAndGetToken(email,password);
+//
+//
+//        return new ResponseEntity<>(userLogInResponseDto.getName(), userLogInResponseDto.getMultiValueMap(),HttpStatus.OK);
+//    }
 }
