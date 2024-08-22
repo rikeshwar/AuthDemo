@@ -1,4 +1,4 @@
-package com.projects.authdemo.Security;
+package com.projects.authdemo.Security.Config;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -6,12 +6,15 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
+import com.projects.authdemo.Security.DTO.PersistentBagMixin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +27,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.jackson2.CoreJackson2Module;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -84,16 +88,25 @@ public class SecurityConfig{
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User.builder()
-                .username("user")
-                .password(bCryptPasswordEncoder.encode("password"))
-                .roles("USER")
-                .build();
-
-        return new InMemoryUserDetailsManager(userDetails);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails userDetails = User.builder()
+//                .username("user")
+//                .password(bCryptPasswordEncoder.encode("password"))
+//                .roles("USER")
+//                .build();
+//
+//       return new InMemoryUserDetailsManager(userDetails);
+//    }
+//   @Bean
+//   public ObjectMapper objectMapper() {
+//       ObjectMapper mapper = new ObjectMapper();
+//       mapper.registerModule(new CoreJackson2Module());
+//       SimpleModule module = new SimpleModule();
+//       module.setMixInAnnotation(org.hibernate.collection.spi.PersistentBag.class, PersistentBagMixin.class);
+//       mapper.registerModule(module);
+//       return mapper;
+//   }
 
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
