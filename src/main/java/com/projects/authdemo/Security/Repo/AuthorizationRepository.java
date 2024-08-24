@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-//@Repository
+@Repository
 public interface AuthorizationRepository extends JpaRepository<Authorization, String> {
     Optional<Authorization> findByState(String state);
     Optional<Authorization> findByAuthorizationCodeValue(String authorizationCode);

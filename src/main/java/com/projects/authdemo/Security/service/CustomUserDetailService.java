@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
-    private CustomUserDetail customUserDetail;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -33,7 +33,7 @@ public class CustomUserDetailService implements UserDetailsService {
         Optional<User> userOptional=userRepository.getUserByEmail(username);
         if(userOptional.isEmpty())
             throw new UsernameNotFoundException("there is no user with "+ username);
-        customUserDetail=new CustomUserDetail(userOptional.get());
+        CustomUserDetail customUserDetail=new CustomUserDetail(userOptional.get());
 
         return customUserDetail;
     }

@@ -25,55 +25,72 @@ import java.util.List;
 //})
 //    @JsonProperty("username") String username;
 //    @JsonProperty("password") String password;
-@Getter
-@Setter
+
 @NoArgsConstructor
 @JsonDeserialize
 public class CustomUserDetail implements UserDetails {
 
-    private User user;
+    private String username;
+    private String password;
+    private List<CustomGrantedAuthority> authorities;
+    private boolean accountNonExpired;
+    private boolean credentialsNonExpired;
+    private boolean enabled;
+    private boolean accountNonLocked;
+    private Long userId;
+
 
 
     public CustomUserDetail(User user)
     {
-        this.user=user;
-
+        this.username=user.getEmail();
+        this.password=user.getPassword();
+        this.authorities=new ArrayList<>();
+        for(Role role:user.getRole())
+        {
+            authorities.add(new CustomGrantedAuthority(role));
+        }
+        this.userId=user.getId();
     }
-
+    public Long getUserId()
+    {
+        return userId;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        List<CustomGrantedAuthority> customGrantedAuthorities=new ArrayList<>();
-        for(Role role:user.getRole())
-        {
-            customGrantedAuthorities.add(new CustomGrantedAuthority(role));
-        }
-        return customGrantedAuthorities;
+
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return password;
     }
+
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return username;
     }
     public boolean isAccountNonExpired() {
-        return true;
+        accountNonExpired=true;
+        return accountNonExpired;
     }
 
     public boolean isAccountNonLocked() {
-        return true;
+        accountNonLocked=true;
+        return accountNonLocked;
     }
 
     public boolean isCredentialsNonExpired() {
-        return true;
+        credentialsNonExpired=true;
+        return credentialsNonExpired;
     }
 
     public boolean isEnabled() {
-        return true;
+        enabled=true;
+        return enabled;
     }
 }
